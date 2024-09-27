@@ -3,7 +3,7 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
 import { SURAH } from "@/data/resume";
-import { getAyat } from "@/data/surah";
+import { getAyatV2 } from "@/data/surah";
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -19,7 +19,8 @@ export default function SurahPage({ params }: { params: { id: string } }) {
         const fetchAyat = async () => {
             setIsLoading(true);
             try {
-                const data = await getAyat(params.id);
+                const data = await getAyatV2(params.id);
+
                 if (!data) {
                     notFound();
                 }
@@ -55,7 +56,12 @@ export default function SurahPage({ params }: { params: { id: string } }) {
                                 text={surah?.nama ?? '-'}
                             />
                             <BlurFadeText
-                                className="max-w-[600px] text-sm"
+                                className="max-w-[600px] text-md italic semibold border-b border-dashed w-full pb-2"
+                                delay={BLUR_FADE_DELAY}
+                                text={'—— ' + surah?.arti ?? ''}
+                            />
+                            <BlurFadeText
+                                className="max-w-[600px] text-sm border-b border-dashed w-full pb-2"
                                 delay={BLUR_FADE_DELAY}
                                 text={surah?.keterangan ?? '-'}
                             />
@@ -68,14 +74,22 @@ export default function SurahPage({ params }: { params: { id: string } }) {
                     <BlurFade delay={BLUR_FADE_DELAY * 5}>
                         <h2 className="text-xl font-bold">Ayat</h2>
                     </BlurFade>
+                    {
+                        params.id !== '1' && (
+                            <BlurFade delay={BLUR_FADE_DELAY * 6}>
+                                <h2 className="text-3xl text-center">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</h2>
+                            </BlurFade>
+                        )
+                    }
                     <div className="flex flex-col gap-12 divide-y divide-dashed">
                         {
                             (ayatData?.length ?? 0) > 0 ? (
                                 ayatData?.map((ayat: any, index: number) => (
-                                    <BlurFade key={index} delay={BLUR_FADE_DELAY * (index + 6)} className="pt-8">
-                                        <p className="text-3xl text-right">{ayat.nomor == '1' && params.id != '1' ? ayat.ar.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '') : ayat.ar}</p>
-                                        <p className="text-sm mt-4" dangerouslySetInnerHTML={{ __html: ayat.tr }}></p>
-                                        <p className="text-sm text-muted-foreground mt-2">{ayat.id}</p>
+                                    <BlurFade key={index} delay={BLUR_FADE_DELAY * (index + 6)} className="pt-6 sm:pt-8">
+                                        <p className="text-3xl text-right leading-relaxed sm:leading-loose">{ayat.text.arab}</p>
+                                        {/* <p className="text-3xl text-right">{ayat.nomor == '1' && params.id != '1' ? ayat.ar.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '') : ayat.ar}</p> */}
+                                        <p className="text-sm mt-4" dangerouslySetInnerHTML={{ __html: ayat.text.transliteration.en }}></p>
+                                        <p className="text-sm text-muted-foreground mt-2">{ayat.translation.id}</p>
                                     </BlurFade>
                                 ))
                             ) : (
