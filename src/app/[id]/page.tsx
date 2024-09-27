@@ -58,7 +58,7 @@ export default function SurahPage({ params }: { params: { id: string } }) {
                             <BlurFadeText
                                 className="max-w-[600px] text-md italic semibold border-b border-dashed w-full pb-2"
                                 delay={BLUR_FADE_DELAY}
-                                text={'—— ' + surah?.arti ?? ''}
+                                text={`—— ${surah?.arti ? surah?.arti : ''}`}
                             />
                             <BlurFadeText
                                 className="max-w-[600px] text-sm border-b border-dashed w-full pb-2"
