@@ -2,7 +2,7 @@ import { Icons } from "@/components/icons";
 import { HomeIcon } from "lucide-react";
 
 export const DATA = {
-  name: "Al - Qura'an",
+  name: "Al - Qur'an",
   initials: "Al - Qur'an",
   url: "https://tegar-kingofthejungle.vercel.app/",
   location: "San Francisco, CA",
