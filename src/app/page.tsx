@@ -24,7 +24,7 @@ export default function Page() {
               <BlurFadeText
                 className="max-w-[600px] md:text-xl"
                 delay={BLUR_FADE_DELAY}
-                text="Discover guidance and wisdom in the Quran with easy access and clear translations to deepen your understanding and connection."
+                text="Discover guidance and wisdom in the Quran with easy access and clear translations to deepen your understanding."
               />
               <BlurFade
                 delay={BLUR_FADE_DELAY}
@@ -53,13 +53,13 @@ export default function Page() {
       </section> */}
       <section id="surah">
         <div className="flex min-h-0 flex-col divide-y divide-dashed">
-          <BlurFade delay={BLUR_FADE_DELAY * 5}>
+          <BlurFade delay={BLUR_FADE_DELAY}>
             <h2 className="text-xl font-bold mb-4 text-center">SURAH</h2>
           </BlurFade>
-          {SURAH.map((surah, id) => (
+          {SURAH.map((surah) => (
             <BlurFade
               key={surah.nomor}
-              delay={BLUR_FADE_DELAY * 6 + id * 0.05}
+              delay={BLUR_FADE_DELAY}
             >
               <ResumeCard
                 key={surah.nomor}

@@ -79,12 +79,12 @@ export default function SurahPage({ params }: { params: { id: string } }) {
             </section>
             <section id="ayat">
                 <div className="flex min-h-0 flex-col gap-y-3">
-                    <BlurFade delay={BLUR_FADE_DELAY * 5}>
+                    <BlurFade delay={BLUR_FADE_DELAY * 3}>
                         <h2 className="text-xl font-bold">Ayat</h2>
                     </BlurFade>
                     {
                         params.id !== '1' && (
-                            <BlurFade delay={BLUR_FADE_DELAY * 6}>
+                            <BlurFade delay={BLUR_FADE_DELAY * 4}>
                                 <h2 className="text-3xl text-center">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</h2>
                             </BlurFade>
                         )
