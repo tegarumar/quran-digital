@@ -3,7 +3,7 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import BlurFadeText from "@/components/magicui/blur-fade-text";
 import { SURAH } from "@/data/resume";
-import { getAyatV2 } from "@/data/surah";
+import { getAyat, getAyatV2 } from "@/data/surah";
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -20,11 +20,19 @@ export default function SurahPage({ params }: { params: { id: string } }) {
             setIsLoading(true);
             try {
                 const data = await getAyatV2(params.id);
+                let secondData
 
-                if (!data) {
-                    notFound();
+                if (data !== null) {
+                    setAyatData(data);
+                } else {
+                    secondData = await getAyat(params.id);
+                    if (secondData !== null) {
+                        setAyatData(secondData);
+                    } else {
+                        notFound();
+                    }
                 }
-                setAyatData(data);
+
             } catch (error) {
                 console.error("Failed to fetch ayat:", error);
             } finally {
@@ -86,10 +94,27 @@ export default function SurahPage({ params }: { params: { id: string } }) {
                             (ayatData?.length ?? 0) > 0 ? (
                                 ayatData?.map((ayat: any, index: number) => (
                                     <BlurFade key={index} delay={BLUR_FADE_DELAY * (index + 6)} className="pt-6 sm:pt-8">
-                                        <p className="text-3xl text-right leading-relaxed sm:leading-loose">{ayat.text.arab}</p>
-                                        {/* <p className="text-3xl text-right">{ayat.nomor == '1' && params.id != '1' ? ayat.ar.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '') : ayat.ar}</p> */}
-                                        <p className="text-sm mt-4" dangerouslySetInnerHTML={{ __html: ayat.text.transliteration.en }}></p>
-                                        <p className="text-sm text-muted-foreground mt-2">{ayat.translation.id}</p>
+                                        {ayat?.text ? (
+                                            <>
+                                                <p className="text-3xl text-right leading-relaxed sm:leading-loose">
+                                                    {ayat.text.arab}
+                                                </p>
+                                                <p className="text-sm mt-4" dangerouslySetInnerHTML={{ __html: ayat.text.transliteration.en }}></p>
+                                                <p className="text-sm text-muted-foreground mt-2">
+                                                    {ayat.translation.id}
+                                                </p>
+                                            </>
+                                        ) : (
+                                            // Jika tidak ada properti text, tampilkan fallback atau format lain
+                                            <>
+                                                <p className="text-3xl text-right leading-relaxed sm:leading-loose">{ayat.nomor == '1' && params.id != '1' ? ayat.ar.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '') : ayat.ar}</p>
+                                                <p className="text-sm mt-4" dangerouslySetInnerHTML={{ __html: ayat.tr }}>
+                                                </p>
+                                                <p className="text-sm text-muted-foreground mt-2">
+                                                    {ayat.id}
+                                                </p>
+                                            </>
+                                        )}
                                     </BlurFade>
                                 ))
                             ) : (
