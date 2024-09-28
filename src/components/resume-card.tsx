@@ -15,7 +15,7 @@ interface ResumeCardProps {
   subtitle?: string;
   href?: string;
   badges?: readonly string[];
-  period: string;
+  ayahs: string;
   description?: string;
   asma?: string;
 }
@@ -25,7 +25,7 @@ export const ResumeCard = ({
   subtitle,
   href,
   badges,
-  period,
+  ayahs,
   description,
   asma
 }: ResumeCardProps) => {
@@ -85,7 +85,7 @@ export const ResumeCard = ({
                 />
               </h3>
               <div className="text-xs sm:text-sm tabular-nums text-muted-foreground text-right">
-                {period}
+                {ayahs}
               </div>
             </div>
             {subtitle && <div className="font-sans text-xs">{subtitle}</div>}

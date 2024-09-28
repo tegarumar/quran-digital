@@ -67,7 +67,7 @@ export default function Page() {
                 title={surah.nama}
                 subtitle={surah.arti}
                 href={surah.nomor}
-                period={`${surah.ayat} ayat`}
+                ayahs={`${surah.ayat} ayat`}
                 asma={surah.asma}
               />
             </BlurFade>

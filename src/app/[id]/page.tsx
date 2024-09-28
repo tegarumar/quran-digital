@@ -95,6 +95,7 @@ export default function SurahPage({ params }: { params: { id: string } }) {
                                 ayatData?.map((ayat: any, index: number) => (
                                     <BlurFade key={index} delay={BLUR_FADE_DELAY * (index + 6)} className="pt-6 sm:pt-8">
                                         {ayat?.text ? (
+                                            // property for API v2
                                             <>
                                                 <p className="text-3xl text-right leading-relaxed sm:leading-loose">
                                                     {ayat.text.arab}
@@ -105,7 +106,7 @@ export default function SurahPage({ params }: { params: { id: string } }) {
                                                 </p>
                                             </>
                                         ) : (
-                                            // Jika tidak ada properti text, tampilkan fallback atau format lain
+                                            // property for API v1
                                             <>
                                                 <p className="text-3xl text-right leading-relaxed sm:leading-loose">{ayat.nomor == '1' && params.id != '1' ? ayat.ar.replace('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', '') : ayat.ar}</p>
                                                 <p className="text-sm mt-4" dangerouslySetInnerHTML={{ __html: ayat.tr }}>
